@@ -18,10 +18,7 @@ return {
         'eslint_d', -- ts/js linter
         'shfmt',
         'clang-format', -- C / C++
-        'goimports', -- Go
-        'google-java-format', -- Java
-        'csharpier', -- C#
-        -- 'stylua', -- lua formatter; Already installed via Mason
+        'stylua', -- lua formatter; Already installed via Mason
         -- 'ruff', -- Python linter and formatter; Already installed via Mason
       },
       -- auto-install configured formatters & linters (with null-ls)
@@ -36,17 +33,11 @@ return {
       formatting.terraform_fmt,
       -- ➕ New formatters
       formatting.clang_format, -- C / C++
-      formatting.goimports, -- Go
-      formatting.google_java_format, -- Java
-      formatting.csharpier, -- C#
       -- 🧪 Linters
       diagnostics.cppcheck, -- C/C++
-      diagnostics.golangci_lint, -- Go
-      diagnostics.checkstyle, -- Java
-      diagnostics.roslynator, -- C#
       diagnostics.checkmake, -- Makefiles
-      require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
-      require 'none-ls.formatting.ruff_format',
+      -- require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
+      -- require 'none-ls.formatting.ruff_format',
     }
 
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})

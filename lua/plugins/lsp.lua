@@ -2,12 +2,43 @@ return {
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for Neovim
-    { 'mason-org/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+    { -- NOTE: Must be loaded before dependants
+      'mason-org/mason.nvim',
+      config = true,
+      opts = {
+        ui = {
+          icons = {
+            package_installed = '✓',
+            package_pending = '➜',
+            package_uninstalled = '✗',
+          },
+        },
+      },
+    },
     -- mason-lspconfig:
     -- - Bridges the gap between LSP config names (e.g. "lua_ls") and actual Mason package names (e.g. "lua-language-server").
     -- - Used here only to allow specifying language servers by their LSP name (like "lua_ls") in `ensure_installed`.
     -- - It does not auto-configure servers — we use vim.lsp.config() + vim.lsp.enable() explicitly for full control.
-    'mason-org/mason-lspconfig.nvim',
+    --'mason-org/mason-lspconfig.nvim',
+    {
+      'williamboman/mason-lspconfig.nvim',
+      opts = {
+        automatic_enable = {
+          exclude = {
+            --needs external plugin
+            'jdtls',
+          },
+        },
+      },
+    },
+    { 'mfussenegger/nvim-jdtls' },
+    {
+      'MeanderingProgrammer/render-markdown.nvim',
+      dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+      opts = {
+        file_types = { 'markdown' },
+      },
+    },
     -- mason-tool-installer:
     -- - Installs LSPs, linters, formatters, etc. by their Mason package name.
     -- - We use it to ensure all desired tools are present.
@@ -123,7 +154,26 @@ return {
         end
       end,
     })
-
+    -- java
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'java',
+      callback = function(args)
+        require('jdtls.jdtls_setup').setup()
+      end,
+    })
+    -- lua
+    vim.lsp.config('lua_ls', {
+      settings = {
+        Lua = {
+          diagnostics = {
+            disable = {
+              'undefined-global',
+              'undefined-field',
+            },
+          },
+        },
+      },
+    })
     -- LSP servers and clients are able to communicate to each other what features they support.
     -- By default, Neovim doesn't support everything that is in the LSP specification.
     -- When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
@@ -178,9 +228,9 @@ return {
       --},
       clangd = {}, -- ✅ C / C++
       --tsserver = {}, -- ✅ for JS / TS
-      gopls = {}, -- ✅ Go
-      jdtls = {}, -- ✅ Java
-      omnisharp = {}, -- ✅ C#
+      --gopls = {}, -- ✅ Go
+      --jdtls = {}, -- ✅ Java
+      --omnisharp = {}, -- ✅ C#
       -- basedpyright = {
       --   -- Config options: https://github.com/DetachHead/basedpyright/blob/main/docs/settings.md
       --   settings = {
