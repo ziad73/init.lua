@@ -24,14 +24,20 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- steps to add theme
+-- 1. add theme file in plugins/themes
+-- 2. load file in local themes list
+-- 3. set it as default
+
 -- Import color theme based on environment variable NVIM_THEME
-local default_color_scheme = 'nord'
+local default_color_scheme = 'gruvbox_material' -- 'onedark' --'nord'
 local env_var_nvim_theme = os.getenv 'NVIM_THEME' or default_color_scheme
 
 -- Define a table of theme modules
 local themes = {
   nord = 'plugins.themes.nord',
   onedark = 'plugins.themes.onedark',
+  gruvbox_material = 'plugins.themes.gruvbox-material',
 }
 
 -- Setup plugins
