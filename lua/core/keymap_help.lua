@@ -24,10 +24,9 @@ local sections = {
   },
 
   Folding = {
-    { 'zc', 'Close current fold' },
-    { 'zo', 'Open current fold' },
-    { '<leader>zc', 'Close all folds' },
-    { '<leader>zo', 'Open all folds' },
+    { 'za / Enter', 'Toggle fold open/close under cursor' },
+    { '[[', 'Jump to previous fold' },
+    { ']]', 'Jump to next fold' },
   },
 
   Buffers = {
@@ -92,7 +91,7 @@ local sections = {
   },
 
   ['Telescope Files'] = {
-    { '<leader>sf', '[S]earch [F]iles' },
+    { '<leader>sf', '[S]earch [F]iles fzf (tab to select files)' },
     { '<leader>sb', '[S]earch [B]uffers' },
     { '<leader>so', '[S]earch [O]ldfiles (recent)' },
     { '<leader>/', 'Fuzzy search in current buffer' },
@@ -106,7 +105,7 @@ local sections = {
   },
 
   ['Telescope Search'] = {
-    { '<leader>sg', '[S]earch by [G]rep' },
+    { '<leader>sg', '[S]earch by [G]rep (Live grep)' },
     { '<leader>sw', '[S]earch current [W]ord' },
     { '<leader>s/', '[S]earch [/] in open files' },
     { '<leader>sd', '[S]earch [D]iagnostics' },

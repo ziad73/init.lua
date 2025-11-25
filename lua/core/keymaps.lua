@@ -9,11 +9,11 @@ vim.g.maplocalleader = ' '
 -- zo   → open current block/fold
 -- <leader>zc  → close all blocks/folds
 -- <leader>zo  → open all blocks/folds
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldenable = false
-vim.keymap.set('n', '<leader>zc', 'zM', { desc = 'Close all folds' })
-vim.keymap.set('n', '<leader>zo', 'zR', { desc = 'Open all folds' })
+-- vim.opt.foldmethod = 'expr'
+vim.opt.foldmethod = 'manual'
+-- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
 
 -- For conciseness
 local opts = { noremap = true, silent = true } -- no remap kaymap cannot be redefined, silent means command not shown in CLI
