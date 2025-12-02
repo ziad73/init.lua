@@ -2,16 +2,19 @@ return {
   'mfussenegger/nvim-dap',
   dependencies = {
     -- Creates a beautiful debugger UI
-    'rcarriga/nvim-dap-ui',
-    'nvim-neotest/nvim-nio',
+    'rcarriga/nvim-dap-ui', -- Debugger UI panels (variables, breakpoints, stack, etc.)
+    'nvim-neotest/nvim-nio', -- Needed by dap-ui
 
     -- Installs the debug adapters for you
-    'williamboman/mason.nvim',
-    'jay-babu/mason-nvim-dap.nvim',
+    'williamboman/mason.nvim', -- Package manager
+    'jay-babu/mason-nvim-dap.nvim', -- Installs debug adapters automatically
 
     -- Add your own debuggers here
-    'leoluz/nvim-dap-go',
-    'mfussenegger/nvim-dap-python',
+    -- 'leoluz/nvim-dap-go', -- Go debugging support (optional)
+    -- 'mfussenegger/nvim-dap-python', -- Python debugging support
+    'mfussenegger/nvim-dap', -- Core debugging engine
+
+    'theHamsta/nvim-dap-virtual-text', -- Shows variable values inline in the code
   },
   config = function()
     local dap = require 'dap'
@@ -31,17 +34,50 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        -- 'delve',
-        'debugpy',
+        -- 'debugpy', -- Python
+        -- 'delve', -- Go
+        'codelldb', -- C/C++/Rust
+        -- 'js-debug-adapter', -- JavaScript/TypeScript
       },
     }
 
+    -- C / C++ / Rust debugger configuration using codelldb
+    dap.adapters.codelldb = {
+      type = 'server',
+      port = '${port}',
+      executable = {
+        command = vim.fn.stdpath 'data' .. '/mason/packages/codelldb/extension/adapter/codelldb',
+        args = { '--port', '${port}' },
+      },
+    }
+
+    dap.configurations.c = {
+      {
+        name = 'Launch file',
+        type = 'codelldb',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        console = 'integratedTerminal', -- this makes printf work
+      },
+    }
+
+    dap.configurations.cpp = dap.configurations.c
+    dap.configurations.rust = dap.configurations.c
+
     -- Basic debugging keymaps, feel free to change to your liking!
-    vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
-    vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
-    vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
-    vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
-    vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+    vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Continue / Start' })
+    vim.keymap.set('n', '<F10>', dap.step_over, { desc = 'Step Over' })
+    vim.keymap.set('n', '<F11>', dap.step_into, { desc = 'Step Into' })
+    vim.keymap.set('n', '<F12>', dap.step_out, { desc = 'Step Out' })
+    vim.keymap.set('n', '<F6>', dap.terminate, { desc = 'Terminate' })
+    vim.keymap.set('n', '<leader>dr', dap.restart, { desc = 'Restart' })
+    vim.keymap.set('n', '<leader>dl', dap.run_last, { desc = 'Run Last Debug' })
+    vim.keymap.set('n', '<leader>du', dapui.toggle, { desc = 'Toggle DAP UI' })
+    vim.keymap.set('n', '<Leader>b', dap.toggle_breakpoint, { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>B', function()
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = 'Debug: Set Breakpoint' })
@@ -77,6 +113,7 @@ return {
 
     -- Install golang specific config
     -- require('dap-go').setup()
-    require('dap-python').setup()
+    require('nvim-dap-virtual-text').setup()
+    -- require('dap-python').setup()
   end,
 }

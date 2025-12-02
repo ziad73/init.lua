@@ -23,6 +23,19 @@ local sections = {
     { '<C-i>', 'Restore jump forward' },
   },
 
+  Debug = {
+    { '<F5>', 'Start / Continue' },
+    { '<F10>', 'Step Over(Enter function)' },
+    { '<F11>', 'Step Into(Skip function internals)' },
+    { '<F12>', 'Step Out(Exit current function)' },
+    { '<F6>', 'Terminate' },
+    { '<leader>dr', '[D]ebug [R]estart' },
+    { '<leader>dl', '[D]ebug [L]ast run' },
+    { '<leader>du', '[D]ebug [U]I Toggle' },
+    { '<leader>b', 'Toggle Breakpoint' },
+    { '<leader>B', 'Set conditional Breakpoint' },
+    { '<F7>', 'Show last session result (DAP UI)' },
+  },
   Comment = {
     { '<C-c> / <C-/>', 'Comment line(s)' },
   },
@@ -136,7 +149,7 @@ local sections = {
     { '<CR>', '[Enter] accept completion' },
     { '<C-j> / <C-k>', 'Select [N]ext / [P]revious completion' },
     { '<C-l> / <C-h>', 'Jump [L]aterally in snippet' },
-    { '<C-c>', '[C]omplete manually' },
+    { '<C-c>', '[C]omplete Suggestions' },
     { '<Tab> / <S-Tab>', '[Tab] cycle through completions/snippets' },
   },
 
