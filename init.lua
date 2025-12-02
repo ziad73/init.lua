@@ -2,6 +2,14 @@ require 'core.options' -- Load general options
 require 'core.keymaps' -- Load general keymaps
 require 'core.snippets' -- Custom code snippets
 
+-- force nvim terminal to use bash
+-- make sure that .bash_profile has "[[ -f ~/.bashrc ]] && source ~/.bashrc"
+-- vim.opt.shell = 'bash -l'
+
+-- vim.opt.arabic = true
+-- vim.opt.rightleft = true
+vim.opt.arabicshape = true
+
 -- keymap_help '' means that it works in all modes
 vim.keymap.set('', '<leader>?', function()
   require('core.keymap_help').open()

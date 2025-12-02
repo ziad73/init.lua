@@ -12,7 +12,7 @@ return {
     vim.opt.foldlevel = 99
     vim.opt.foldlevelstart = 99
 
-    local fold_util = require ('core.code_folds')
+    local fold_util = require 'core.code_folds'
 
     vim.keymap.set('n', '<CR>', 'za', { noremap = true, silent = true })
     vim.keymap.set('n', '[[', fold_util.goto_previous_fold, { noremap = true, silent = true })
@@ -30,7 +30,6 @@ return {
         local row = vim.api.nvim_win_get_cursor(0)[1]
         if row ~= last_row then
           last_row = row
-
           fold_util.update_current_fold(row, opts.buf)
         end
       end,
@@ -42,6 +41,7 @@ return {
       end,
     })
 
+    -- vim.opt.statuscolumn = '%s %{v:lua.StatusCol()}'
     vim.opt.statuscolumn = '%!v:lua.StatusCol()'
     function _G.StatusCol()
       return fold_util.statuscol()

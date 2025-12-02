@@ -52,10 +52,10 @@ vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 
 -- Resize with arrows
-vim.keymap.set('n', '<Up>', ':resize -2<CR>', opts)
-vim.keymap.set('n', '<Down>', ':resize +2<CR>', opts)
-vim.keymap.set('n', '<Left>', ':vertical resize +2<CR>', opts)
-vim.keymap.set('n', '<Right>', ':vertical resize -2<CR>', opts)
+-- vim.keymap.set('n', '<Up>', ':resize -2<CR>', opts)
+-- vim.keymap.set('n', '<Down>', ':resize +2<CR>', opts)
+-- vim.keymap.set('n', '<Left>', ':vertical resize +2<CR>', opts)
+-- vim.keymap.set('n', '<Right>', ':vertical resize -2<CR>', opts)
 
 -- Buffers(files)
 
@@ -89,12 +89,22 @@ vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', opts) -- close current tab
 vim.keymap.set('n', '<leader>tn', ':tabn<CR>', opts) --  go to next tab
 vim.keymap.set('n', '<leader>tp', ':tabp<CR>', opts) --  go to previous tab
 
--- Move text up and down
-vim.keymap.set('', '<A-j>', ":m '>+1<CR>gv=gv", opts) --<A-j> alt j
-vim.keymap.set('', '<A-k>', ":m '<-2<CR>gv=gv", opts)
+-- Move text up and down (normal mode)
+vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', opts) -- <A-j> Alt j
+vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', opts)
+
+-- Move text up and down (insert mode)
+-- vim.keymap.set('i', '<A-j>', '<Esc>:m .+1<CR>==gi', opts)
+-- vim.keymap.set('i', '<A-k>', '<Esc>:m .-2<CR>==gi', opts)
+
+-- Move text up and down (visual mode)
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", opts)
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", opts)
 
 -- Replace word under cursor in whole file
-vim.keymap.set('n', '<leader>rw', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>', { desc = 'Replace word globally' })
+-- case insenstive
+-- vim.keymap.set('n', '<leader>rw', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>', { desc = 'Replace word globally' })
+vim.keymap.set('n', '<leader>rw', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/g<Left><Left><Left>', { desc = 'Replace word globally' })
 
 -- Yank to system clipboard
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { desc = 'Yank to system clipboard' })

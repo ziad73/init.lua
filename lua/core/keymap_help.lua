@@ -23,6 +23,10 @@ local sections = {
     { '<C-i>', 'Restore jump forward' },
   },
 
+  Comment = {
+    { '<C-c> / <C-/>', 'Comment line(s)' },
+  },
+
   Folding = {
     { 'za / Enter', 'Toggle fold open/close under cursor' },
     { '[[', 'Jump to previous fold' },
@@ -60,7 +64,7 @@ local sections = {
   Editing = {
     { '<A-j> / <A-k>', 'Move selected text down/up' },
     { '< / >', '[I]ndent / [D]edent keeping selection' },
-    { '<leader>rw', 'Replace word under cursor globally' },
+    { '<leader>rw', '[R]eplace [W]ord under cursor in whole file' },
   },
 
   Diagnostics = {
