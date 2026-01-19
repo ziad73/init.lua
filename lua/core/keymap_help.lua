@@ -22,6 +22,11 @@ local sections = {
     { 'x', 'Delete char without copying to register' },
     { '<C-i>', 'Restore jump forward' },
   },
+  Surround = {
+    { 'ys<char>', 'Surround ENTIRE LINE with character' },
+    { 'S<char>', 'Surround selected text (visual mode)' },
+    { '( / [ / { / " / \' / `', 'Instant surround selection with matching pairs' },
+  },
 
   Debug = {
     { '<F5>', 'Start / Continue' },
@@ -153,6 +158,10 @@ local sections = {
     { '<Tab> / <S-Tab>', '[Tab] cycle through completions/snippets' },
   },
 
+  URL = {
+    { '<leader>uo', '[U]RL [O]pen under cursor' },
+    { '<leader>uy', '[U]RL [Y]ank under cursor' },
+  },
   vim_tmux_navigator = {
     { '<C-h>/<C-j>/<C-k>/<C-l>', 'Navigate splits + tmux panes' },
   },

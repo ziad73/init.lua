@@ -139,3 +139,26 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Save and load session
 vim.keymap.set('n', '<leader>ss', ':mksession! .session.vim<CR>', { noremap = true, silent = false })
 vim.keymap.set('n', '<leader>sl', ':source .session.vim<CR>', { noremap = true, silent = false })
+
+-- URL: Open under cursor
+vim.keymap.set('n', '<leader>uo', function()
+  local url = vim.fn.expand '<cfile>'
+  if url ~= '' then
+    vim.fn.jobstart({ 'xdg-open', url }, { detach = true }) -- Linux
+    -- macOS: {'open', url}
+    -- Windows: {'cmd.exe','/C','start',url}
+  else
+    print 'No URL detected'
+  end
+end, { desc = 'Open URL under cursor' })
+
+-- URL: Copy under cursor
+vim.keymap.set('n', '<leader>uy', function()
+  local url = vim.fn.expand '<cfile>'
+  if url ~= '' then
+    vim.fn.setreg('+', url) -- copy to system clipboard
+    print('Copied URL: ' .. url)
+  else
+    print 'No URL detected'
+  end
+end, { desc = 'Copy URL under cursor' })

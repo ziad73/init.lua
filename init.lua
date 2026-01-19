@@ -52,6 +52,8 @@ local themes = {
   gruvbox_material = 'plugins.themes.gruvbox-material',
 }
 
+vim.g.vim_dadbod_completion_enable = 1
+
 -- Setup plugins
 require('lazy').setup(
   {
@@ -71,7 +73,7 @@ require('lazy').setup(
     require 'plugins.comment',
     require 'plugins.debug',
     require 'plugins.gitsigns',
-    --require 'plugins.database',
+    -- require 'plugins.dadbod',
     require 'plugins.misc',
     --require 'plugins.harpoon',
     --require 'plugins.avante',
@@ -79,6 +81,7 @@ require('lazy').setup(
     require 'plugins.vim-tmux-navigator',
     require 'plugins.nvim-origami', -- for block folding
     -- require 'plugins.terminal',
+    require 'plugins.mini-surround',
   },
   -- require('plugins.terminal').setup(),
   {
